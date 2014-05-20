@@ -111,17 +111,19 @@ public:
   typedef typename FixedBinaryVolumeType::Pointer                     FixedBinaryVolumePointer;
   typedef typename MovingBinaryVolumeType::Pointer                    MovingBinaryVolumePointer;
 
-  typedef itk::TranslationTransform<double, MovingImageDimension>                               TranslationTransformType;
-  typedef itk::AffineTransform<double, MovingImageDimension>                                    AffineTransformType;
-  typedef itk::ScalableAffineTransform<double, MovingImageDimension>                            ScalableAffineTransformType;
+  typedef itk::TranslationTransform<double, MovingImageDimension>     TranslationTransformType;
+  typedef itk::AffineTransform<double, MovingImageDimension>          AffineTransformType;
+  typedef itk::ScalableAffineTransform<double, MovingImageDimension>  ScalableAffineTransformType;
 
-  //HACK HANS remove the following line
-  typedef itk::ImageRegistrationMethodv4Generic<FixedImageType, MovingImageType, FixedImageType, double >  AffineRegistrationType;
+  typedef ImageRegistrationMethodv4Generic<
+      FixedImageType,
+      MovingImageType,
+      FixedImageType,
+      double>                                                         RegistrationType;
+  typedef typename RegistrationType::MetricSamplingStrategyType       SamplingStrategyType;
 
-  typedef typename AffineRegistrationType::MetricSamplingStrategyType                           SamplingStrategyType;
-
-  typedef typename AffineTransformType::Superclass                                   MatrixOffsetTransformBaseType;
-  typedef typename MatrixOffsetTransformBaseType::Pointer                            MatrixOffsetTransformBasePointer;
+  typedef typename AffineTransformType::Superclass                    MatrixOffsetTransformBaseType;
+  typedef typename MatrixOffsetTransformBaseType::Pointer             MatrixOffsetTransformBasePointer;
 
   /** Method for creation through the object factory. */
   itkNewMacro(Self);

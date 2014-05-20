@@ -539,7 +539,7 @@ BRAINSFitHelperTemplate<FixedImageType, MovingImageType>::BRAINSFitHelperTemplat
   m_CostMetricObject(NULL),
   m_UseROIBSpline(0),
   m_PermitParameterVariation(0),
-  m_SamplingStrategy(AffineRegistrationType::NONE),
+  m_SamplingStrategy(RegistrationType::NONE),
   m_InitializeRegistrationByCurrentGenericTransform(true),
   m_ForceMINumberOfThreads(-1)
 {
@@ -1173,13 +1173,10 @@ BRAINSFitHelperTemplate<FixedImageType, MovingImageType>::Update(void)
       {
       const unsigned int SpaceDimension = 3;
       const unsigned int SplineOrder = 3;
+
+      typename RegistrationType::Pointer bsplineRegistration = RegistrationType::New();
+
       typedef itk::BSplineTransform<double, SpaceDimension, SplineOrder> BSplineTransformType;
-
-      //HACK HANS REMOVE THE FOLLOWIG
-      typedef itk::ImageRegistrationMethodv4Generic<FixedImageType, MovingImageType, FixedImageType, double> BSplineRegistrationType;
-      typename BSplineRegistrationType::Pointer bsplineRegistration = BSplineRegistrationType::New();
-      //HACK HANS NOT NEEDED, see below bsplineRegistration->SetTransform( BSplineTransformType::New(), true);
-
       typename BSplineTransformType::Pointer initialBSplineTransform = BSplineTransformType::New();
       // Initialize the BSpline transform
       BSplineTransformType::PhysicalDimensionsType   fixedPhysicalDimensions;
@@ -1353,11 +1350,11 @@ BRAINSFitHelperTemplate<FixedImageType, MovingImageType>::Update(void)
       // we have a 1 level BSpline registration.
       const unsigned int numberOfLevels = 1;
 
-      typename BSplineRegistrationType::ShrinkFactorsArrayType shrinkFactorsPerLevel;
+      typename RegistrationType::ShrinkFactorsArrayType shrinkFactorsPerLevel;
       shrinkFactorsPerLevel.SetSize( 1 );
       shrinkFactorsPerLevel[0] = 1;
 
-      typename BSplineRegistrationType::SmoothingSigmasArrayType smoothingSigmasPerLevel;
+      typename RegistrationType::SmoothingSigmasArrayType smoothingSigmasPerLevel;
       smoothingSigmasPerLevel.SetSize( 1 );
       smoothingSigmasPerLevel[0] = 0;
 
@@ -1365,8 +1362,7 @@ BRAINSFitHelperTemplate<FixedImageType, MovingImageType>::Update(void)
       bsplineRegistration->SetSmoothingSigmasPerLevel( smoothingSigmasPerLevel );
       bsplineRegistration->SetShrinkFactorsPerLevel( shrinkFactorsPerLevel );
       bsplineRegistration->SetSmoothingSigmasAreSpecifiedInPhysicalUnits( true );
-      bsplineRegistration->SetMetricSamplingStrategy(
-                                                     static_cast<typename BSplineRegistrationType::MetricSamplingStrategyType>( m_SamplingStrategy ) );
+      bsplineRegistration->SetMetricSamplingStrategy( m_SamplingStrategy );
       bsplineRegistration->SetMetricSamplingPercentage( m_SamplingPercentage );
       bsplineRegistration->SetMetric( this->m_CostMetricObject );
       bsplineRegistration->SetOptimizer( LBFGSBoptimizer );
