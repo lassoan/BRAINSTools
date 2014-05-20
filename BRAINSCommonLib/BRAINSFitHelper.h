@@ -93,9 +93,13 @@ public:
 
   typedef HelperType::MetricType                             GenericMetricType;
 
-  typedef itk::AffineTransform<double, 3>                                                         AffineTransformType;
-  typedef itk::ImageRegistrationMethodv4Generic<FixedImageType, MovingImageType, FixedImageType,double>  AffineRegistrationType;
-  typedef AffineRegistrationType::MetricSamplingStrategyType                                      SamplingStrategyType;
+  typedef itk::AffineTransform<double, 3>                    AffineTransformType;
+  typedef itk::ImageRegistrationMethodv4Generic<
+    FixedImageType,
+    MovingImageType,
+    FixedImageType,
+    double>                                                  RegistrationType;
+  typedef RegistrationType::MetricSamplingStrategyType       SamplingStrategyType;
 
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
@@ -194,15 +198,15 @@ public:
   {
   if( strategy == "Random" )
     {
-    m_SamplingStrategy = AffineRegistrationType::RANDOM;
+    m_SamplingStrategy = RegistrationType::RANDOM;
     }
   else if( strategy == "Regular" )
     {
-    m_SamplingStrategy = AffineRegistrationType::REGULAR;
+    m_SamplingStrategy = RegistrationType::REGULAR;
     }
   else if( (strategy == "None") || (strategy == "") )
     {
-    m_SamplingStrategy = AffineRegistrationType::NONE;
+    m_SamplingStrategy = RegistrationType::NONE;
     }
   else
     {
@@ -339,9 +343,9 @@ BRAINSFitHelper::SetupRegistration(GenericMetricType *localCostMetric)
     {
     const unsigned long numberOfAllSamples = this->m_FixedVolume->GetBufferedRegion().GetNumberOfPixels();
     this->m_SamplingPercentage = static_cast<double>( this->m_NumberOfSamples )/numberOfAllSamples;
-    if( this->m_SamplingStrategy == AffineRegistrationType::NONE )
+    if( this->m_SamplingStrategy == RegistrationType::NONE )
       {
-      this->m_SamplingStrategy = AffineRegistrationType::REGULAR;
+      this->m_SamplingStrategy = RegistrationType::REGULAR;
       }
     }
 
@@ -358,7 +362,7 @@ BRAINSFitHelper::SetupRegistration(GenericMetricType *localCostMetric)
       // However, we want to pick all of our intented samples from the mask area, so we do sampling here.
 
       // First overwrite the sampling strategy to be none
-      this->m_SamplingStrategy = AffineRegistrationType::NONE;
+      this->m_SamplingStrategy = RegistrationType::NONE;
 
       // then pick the samples inside the mask and pass them to metric
       typename MetricSamplePointSetType::Pointer samplePointSet = MetricSamplePointSetType::New();

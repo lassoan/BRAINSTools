@@ -416,7 +416,6 @@ public:
       MovingImageType,
       FixedImageType,
       double>                                   RegistrationType;
-  typedef RegistrationType                      AffineRegistrationType; //HACK an alias to remove HANS
   typedef typename RegistrationType::Pointer    RegistrationPointer;
   typedef typename RegistrationType::MetricSamplingStrategyType SamplingStrategyType;
 

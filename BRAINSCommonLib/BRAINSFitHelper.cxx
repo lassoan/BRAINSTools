@@ -125,7 +125,7 @@ BRAINSFitHelper::BRAINSFitHelper() :
   m_CostMetric("MMI"), // Default to Mattes Mutual Information Metric
   m_UseROIBSpline(false),
   m_Helper(NULL),
-  m_SamplingStrategy(AffineRegistrationType::NONE),
+  m_SamplingStrategy(RegistrationType::NONE),
   m_NormalizeInputImages(false),
   m_InitializeRegistrationByCurrentGenericTransform(true),
   m_ForceMINumberOfThreads(-1)
