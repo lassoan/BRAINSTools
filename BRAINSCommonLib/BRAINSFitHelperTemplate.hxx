@@ -1175,8 +1175,10 @@ BRAINSFitHelperTemplate<FixedImageType, MovingImageType>::Update(void)
       const unsigned int SplineOrder = 3;
       typedef itk::BSplineTransform<double, SpaceDimension, SplineOrder> BSplineTransformType;
 
-      typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType, BSplineTransformType> BSplineRegistrationType;
+      //HACK HANS REMOVE THE FOLLOWIG
+      typedef itk::ImageRegistrationMethodv4Generic<FixedImageType, MovingImageType, FixedImageType, double> BSplineRegistrationType;
       typename BSplineRegistrationType::Pointer bsplineRegistration = BSplineRegistrationType::New();
+      //HACK HANS NOT NEEDED, see below bsplineRegistration->SetTransform( BSplineTransformType::New(), true);
 
       typename BSplineTransformType::Pointer initialBSplineTransform = BSplineTransformType::New();
       // Initialize the BSpline transform
@@ -1206,7 +1208,7 @@ BRAINSFitHelperTemplate<FixedImageType, MovingImageType>::Update(void)
       // std::cout << "Intial Parameters = " << std::endl
       //           << initialBSplineTransform->GetParameters() << std::endl;
 
-      bsplineRegistration->InitializeOutputTransformFromReference( initialBSplineTransform );
+      bsplineRegistration->SetTransform( initialBSplineTransform, false);
 
       // TODO:  Expose these to the command line for consistancy.
       const int m_MaximumNumberOfIterations = 1500;

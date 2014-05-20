@@ -322,11 +322,11 @@ MultiResolutionQuadEdgeMeshSphericalDiffeomorphicDemonsFilter<TMesh>
 
 #endif
 
-  typedef MeshToMeshRegistrationMethod<MeshType, MeshType> RegistrationType;
+  typedef MeshToMeshRegistrationMethod<MeshType, MeshType> M2MRegistrationType;
 
   typedef MeanSquaresMeshToMeshMetric<MeshType, MeshType> MetricType;
 
-  typename RegistrationType::Pointer   registration  = RegistrationType::New();
+  typename M2MRegistrationType::Pointer   registration  = M2MRegistrationType::New();
 
   typename MetricType::Pointer  metric = MetricType::New();
 

@@ -49,8 +49,8 @@ MultiResolutionICCDeformableRegistration<TFixedImage, TMovingImage, TDisplacemen
   // Primary input is optional in this filter
   this->RemoveRequiredInputName( "Primary" );
 
-  typename RegistrationType::Pointer registrator = RegistrationType::New();
-  m_RegistrationFilter = dynamic_cast<RegistrationType *>( registrator.GetPointer() );
+  typename MRPDERegistrationType::Pointer registrator = MRPDERegistrationType::New();
+  m_RegistrationFilter = dynamic_cast<MRPDERegistrationType *>( registrator.GetPointer() );
 
   m_MovingImagePyramid  = MovingImagePyramidType::New();
   m_FixedImagePyramid     = FixedImagePyramidType::New();

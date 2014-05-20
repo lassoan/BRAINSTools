@@ -43,7 +43,7 @@
 
 #define COMMON_MMI_METRIC_TYPE itk::MattesMutualInformationImageToImageMetricv4
 
-#include "itkImageRegistrationMethodv4.h"
+#include "itkImageRegistrationMethodv4Generic.h"
 #include "itkLinearInterpolateImageFunction.h"
 #include "itkImage.h"
 #include "itkDataObjectDecorator.h"
@@ -411,18 +411,16 @@ public:
   typedef typename MetricType::MovingImageMaskType MovingBinaryVolumeType;
   typedef typename MovingBinaryVolumeType::Pointer MovingBinaryVolumePointer;
 
-  typedef ImageRegistrationMethodv4<
+  typedef ImageRegistrationMethodv4Generic<
       FixedImageType,
       MovingImageType,
-      TransformType>                                            RegistrationType;
-  typedef typename RegistrationType::Pointer                    RegistrationPointer;
+      FixedImageType,
+      double>                                   RegistrationType;
+  typedef RegistrationType                      AffineRegistrationType; //HACK an alias to remove HANS
+  typedef typename RegistrationType::Pointer    RegistrationPointer;
+  typedef typename RegistrationType::MetricSamplingStrategyType SamplingStrategyType;
 
-  typedef itk::AffineTransform<double, 3>                             AffineTransformType;
-  typedef itk::ImageRegistrationMethodv4<
-      FixedImageType,
-      MovingImageType,
-      AffineTransformType>                                            AffineRegistrationType;
-  typedef typename AffineRegistrationType::MetricSamplingStrategyType SamplingStrategyType;
+  typedef itk::AffineTransform<double, 3>       AffineTransformType;
 
   typedef itk::CenteredTransformInitializer<
       TransformType,

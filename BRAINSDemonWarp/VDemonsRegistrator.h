@@ -132,7 +132,7 @@ public:
   typedef MultiResolutionPDEDeformableRegistration<
       RealImageType,
       RealImageType,
-      TDisplacementField, float>    RegistrationType;
+      TDisplacementField, float>    MRPDERegistrationType;
 
   typedef VectorMultiResolutionPDEDeformableRegistration<
       VectorImageType,
@@ -274,7 +274,7 @@ private:
   std::vector<ImagePointer> m_UnNormalizedFixedImage;
   typename FixedImagePyramidType::Pointer m_FixedImagePyramid;
   typename MovingImagePyramidType::Pointer m_MovingImagePyramid;
-  typename RegistrationType::Pointer m_Registration;
+  typename MRPDERegistrationType::Pointer m_Registration;
   typename VectorRegistrationType::Pointer m_VectorRegistration;
   typename RealImageType::PixelType m_DefaultPixelValue;
 

@@ -89,7 +89,7 @@ MultiModal3DMutualRegistrationHelper<TTransformType, TOptimizer, TFixedImage,
   m_PromptUserAfterDisplay(false),
   m_FinalMetricValue(0),
   m_ObserveIterations(true),
-  m_SamplingStrategy(AffineRegistrationType::NONE),
+  m_SamplingStrategy(RegistrationType::NONE),
   m_ForceMINumberOfThreads(-1),
   m_InternalTransformTime(0)
 {
@@ -129,13 +129,13 @@ MultiModal3DMutualRegistrationHelper<TTransformType, TOptimizer, TFixedImage,
     }
 
   m_Registration = RegistrationType::New();
-
   // In BRAINSFit, we aim to optimize the initial transform directly.
   // Therefore, m_Transform is pointed directly to the internal registration transform;
   // then, it is initialized by the input initial transform.
   // In above case, there is no more need to set the "MovingInitalTransform".
-  //
-  m_Transform = const_cast<TransformType *>( m_Registration->GetOutput()->Get() );
+  m_Transform = TransformType::New();
+  m_Registration->SetTransform( m_Transform, true );
+
 
   if( this->m_CompositeTransform->GetNumberOfTransforms() == 1 )
     {
@@ -391,6 +391,10 @@ MultiModal3DMutualRegistrationHelper<TTransformType, TOptimizer, TFixedImage,
     // Pass exception to caller
     throw err;
     }
+
+  m_Transform = const_cast< TransformType *> (
+    dynamic_cast<const TransformType *>( m_Registration->GetModifiableOutput()->Get() )
+  );
 
   std::cout << "METRIC       THREADS USED: " << this->m_CostMetricObject->GetNumberOfThreadsUsed()
   << " of " << itk::MultiThreader::GetGlobalDefaultNumberOfThreads() <<  std::endl;

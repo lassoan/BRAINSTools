@@ -117,7 +117,7 @@ VDemonsRegistrator<TRealImage, TOutputImage, TFieldValue>::VDemonsRegistrator()
   m_FixedImagePyramid->UseShrinkImageFilterOff();
   m_MovingImagePyramid = MovingImagePyramidType::New();
   m_MovingImagePyramid->UseShrinkImageFilterOff();
-  m_Registration = RegistrationType::New();
+  m_Registration = MRPDERegistrationType::New();
   m_VectorRegistration = VectorRegistrationType::New();
 
   m_Registration->SetFixedImagePyramid(m_FixedImagePyramid);

@@ -124,7 +124,7 @@ public:
   typedef MultiResolutionPDEDeformableRegistration<
       RealImageType,
       RealImageType,
-      TDisplacementField, float>    RegistrationType;
+      TDisplacementField, float>    MRPDERegistrationType;
 
   /** UnsignedIntArray type. */
   typedef Array<unsigned int> UnsignedIntArray;
@@ -215,7 +215,7 @@ public:
     this->m_Registration->SetRegistrationFilter(filter);
   }
 
-  RegistrationType * GetRegistrationType(void)
+  MRPDERegistrationType * GetRegistrationType(void)
   {
     return m_Registration;
   }
@@ -236,7 +236,7 @@ private:
   typename RealImageType::Pointer m_UnNormalizedFixedImage;
   typename FixedImagePyramidType::Pointer m_FixedImagePyramid;
   typename MovingImagePyramidType::Pointer m_MovingImagePyramid;
-  typename RegistrationType::Pointer m_Registration;
+  typename MRPDERegistrationType::Pointer m_Registration;
   typename RealImageType::PixelType m_DefaultPixelValue;
 
   unsigned short   m_NumberOfLevels;

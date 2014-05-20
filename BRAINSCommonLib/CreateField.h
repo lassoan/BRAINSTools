@@ -97,7 +97,7 @@ public:
   typedef RecursiveMultiResolutionPyramidImageFilter<MovingImageType,
                                                      MovingImageType>                        MovingImagePyramidType;
   typedef MultiResolutionPDEDeformableRegistration<FixedImageType,
-                                                   MovingImageType, TDisplacementField>     RegistrationType;
+                                                   MovingImageType, TDisplacementField>     MRPDERegistrationType;
 
   typedef Array<unsigned int>
     UnsignedIntArray;
@@ -137,7 +137,7 @@ private:
   typename MovingImagePyramidType::Pointer m_MovingImagePyramid;
   typename TDisplacementField::Pointer m_DisplacementField;
   unsigned long m_Tag;
-  typename RegistrationType::Pointer m_Registration;
+  typename MRPDERegistrationType::Pointer m_Registration;
 
   typedef typename OutputImageType::Pointer OutputImagePointer;
   void NormalizeImage(InputImageType *input, OutputImagePointer & output, InputPixelType & min);

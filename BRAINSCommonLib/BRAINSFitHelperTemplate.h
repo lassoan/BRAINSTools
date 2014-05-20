@@ -114,7 +114,10 @@ public:
   typedef itk::TranslationTransform<double, MovingImageDimension>                               TranslationTransformType;
   typedef itk::AffineTransform<double, MovingImageDimension>                                    AffineTransformType;
   typedef itk::ScalableAffineTransform<double, MovingImageDimension>                            ScalableAffineTransformType;
-  typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType, AffineTransformType>  AffineRegistrationType;
+
+  //HACK HANS remove the following line
+  typedef itk::ImageRegistrationMethodv4Generic<FixedImageType, MovingImageType, FixedImageType, double >  AffineRegistrationType;
+
   typedef typename AffineRegistrationType::MetricSamplingStrategyType                           SamplingStrategyType;
 
   typedef typename AffineTransformType::Superclass                                   MatrixOffsetTransformBaseType;

@@ -55,7 +55,7 @@ CreateField<TImage,
   m_FixedImagePyramid->UseShrinkImageFilterOff();
   m_MovingImagePyramid = MovingImagePyramidType::New();
   m_MovingImagePyramid->UseShrinkImageFilterOff();
-  m_Registration       = RegistrationType::New();
+  m_Registration       = MRPDERegistrationType::New();
 
   m_Registration->SetFixedImagePyramid(m_FixedImagePyramid);
   m_Registration->SetMovingImagePyramid(m_MovingImagePyramid);
